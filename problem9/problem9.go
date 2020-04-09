@@ -1,37 +1,40 @@
 package main
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
-import "fmt"
+var number float64
 
-var adjustA = 5
-var adjustB = 10
+func pythagorean(sqrtNumber, res float64) (bool, int) {
 
-func pythagorean(a, b float64) (bool, float64) {
-	c := math.Pow(a, 2.0) + math.Pow(b, 2.0)
-	if int(math.Mod(c, math.Sqrt(c))) == 0 {
-		if a+b+c == 1000 {
-			return true, (a * b * c)
+	for a := 1; a < int(number)/2; a++ {
+		aFloat := float64(a)
+
+		b := int((number * (number - 2*aFloat)) / (2 * (number - aFloat)))
+
+		if a > b {
+			continue
+		}
+		
+		c := int(math.Sqrt(float64(a*a + b*b)))
+		
+		if a < b && b < c {
+			if a*a+b*b == c*c {
+				fmt.Println(a,b,c)
+				return true,(a*b*c)
+			}
 		}
 	}
-	return false, 0.0
+	return false, 0
 }
 
 func main() {
-	//a + b +c = 1000
-	//a²+b²=c²
-	//a < b <c
-	//a2 + b2 = c2
-	// a < c
-	//r = a * b * c
-	a := 3.0
-	b := 4.0
-	for {
-		is, product := pythagorean(a, b)
-		if is {
-			fmt.Println(int(product))
-			break
-		}
-		a
-	}
+
+	number = 1000
+	sqrtNumber := math.Sqrt(float64(number / 2))
+	res := sqrtNumber - float64(int(sqrtNumber))
+	fmt.Println(pythagorean(sqrtNumber, res))
+	
 }
